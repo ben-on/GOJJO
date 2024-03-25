@@ -45,3 +45,12 @@ gojjo.put('/post', (req, res) => {
         res.sendStatus(404);
     }
 })
+
+gojjo.delete('/post/:id', (req, res) => {
+    const id = req.params.id ;
+
+    posts = posts.filter(item => item.id != id);
+
+    res.status(200)
+
+})
