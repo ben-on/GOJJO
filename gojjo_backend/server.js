@@ -30,3 +30,18 @@ gojjo.post('/post', (req, res) => {
     posts.push(newPost)
     res.sendStatus(201);
 })
+
+gojjo.put('/post', (req, res) => {
+    const newPost = req.body
+
+    const isthere = posts.find((item) => item.user == newPost.user)
+
+    if (isthere){
+        res.sendStatus(200);
+        posts = posts.filter(item => item != isthere)
+
+    }
+    else{
+        res.sendStatus(404);
+    }
+})
