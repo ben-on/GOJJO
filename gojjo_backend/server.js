@@ -37,6 +37,15 @@ app.post('/posts', (req, res) => {
     res.status(201).json(newPost);
 });
 
+// Read a single post by ID
+app.get('/posts/:id', (req, res) => {
+    const post = posts.find(p => p.id === parseInt(req.params.id));
+    if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+    }
+    res.json(post);
+});
+
 gojjo.put('/post', (req, res) => {
     const newPost = req.body
 
