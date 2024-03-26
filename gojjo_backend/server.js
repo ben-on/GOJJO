@@ -46,28 +46,29 @@ app.get('/posts/:id', (req, res) => {
     res.json(post);
 });
 
-gojjo.put('/post', (req, res) => {
-    const newPost = req.body
-
-    const isthere = posts.find((item) => item.user == newPost.user)
-
-    if (isthere){
-        res.sendStatus(200);
-        posts = posts.filter(item => item != isthere)
-
+// Update a post by ID
+app.put('/posts/:id', (req, res) => {
+    const post = posts.find(p => p.id === parseInt(req.params.id));
+    if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
     }
-    else{
-        res.sendStatus(404);
+    const { content } = req.body;
+    if (!content) {
+        return res.status(400).json({ message: 'Content is required' });
     }
-})
+    post.content = content;
+    res.json(post);
+});
 
-gojjo.delete('/post/:id', (req, res) => {
-    const id = req.params.id ;
 
-    posts = posts.filter(item => item.id != id);
-
-    res.status(200)
-
-})
+// Delete a post by ID
+app.delete('/posts/:id', (req, res) => {
+    const postIndex = posts.findIndex(p => p.id === parseInt(req.params.id));
+    if (postIndex === -1) {
+        return res.status(404).json({ message: 'Post not found' });
+    }
+    posts.splice(postIndex, 1);
+    res.json({ message: 'Post deleted' });
+});
 
 
