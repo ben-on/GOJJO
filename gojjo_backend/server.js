@@ -26,11 +26,16 @@ app.get('/posts', (req, res) => {
     res.json(posts);
 });
 
-gojjo.post('/post', (req, res) => {
-    const newPost = req.body
-    posts.push(newPost)
-    res.sendStatus(201);
-})
+// Create a new post
+app.post('/posts', (req, res) => {
+    const { content } = req.body;
+    if (!content) {
+        return res.status(400).json({ message: 'Content is required' });
+    }
+    const newPost = { id: nextId++, content };
+    posts.push(newPost);
+    res.status(201).json(newPost);
+});
 
 gojjo.put('/post', (req, res) => {
     const newPost = req.body
