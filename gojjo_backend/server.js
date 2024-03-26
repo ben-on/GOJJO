@@ -21,9 +21,10 @@ gojjo.get('/', (req, res) => {
 gojjo.listen(process.env.PORT,() => {console.log(`Gojjo is running at port ${process.env.PORT}`)})
 
 
-gojjo.get('/post', (req, res) => {
-    res.status(200).json(posts)
-})
+// Read all posts
+app.get('/posts', (req, res) => {
+    res.json(posts);
+});
 
 gojjo.post('/post', (req, res) => {
     const newPost = req.body
@@ -54,3 +55,5 @@ gojjo.delete('/post/:id', (req, res) => {
     res.status(200)
 
 })
+
+
